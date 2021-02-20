@@ -71,6 +71,11 @@ variable "kibana_port" {
   default     = 5601
 }
 
+variable "platform_explorer_port" {
+  description = "Platform explorer port"
+  default     = 8080
+}
+
 variable "vpc_cidr" {
   default = "10.0.0.0/16"
 }

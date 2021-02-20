@@ -187,6 +187,18 @@ resource "aws_security_group" "http" {
     ])
   }
 
+  ingress {
+    from_port   = var.platform_explorer_port
+    to_port     = var.platform_explorer_port
+    protocol    = "tcp"
+    description = "Platform Explorer"
+
+    cidr_blocks = flatten([
+      aws_subnet.public.*.cidr_block,
+      "${aws_eip.vpn[0].public_ip}/32",
+    ])
+  }
+
   tags = {
     Name        = "dn-${terraform.workspace}-http"
     DashNetwork = terraform.workspace
@@ -361,6 +373,18 @@ resource "aws_security_group" "elb" {
     to_port     = var.insight_port
     protocol    = "tcp"
     description = "Insight Explorer"
+
+    cidr_blocks = [
+      "0.0.0.0/0",
+    ]
+  }
+
+  # Platform Explorer
+  ingress {
+    from_port   = var.platform_explorer_port
+    to_port     = var.platform_explorer_port
+    protocol    = "tcp"
+    description = "Platform Explorer"
 
     cidr_blocks = [
       "0.0.0.0/0",

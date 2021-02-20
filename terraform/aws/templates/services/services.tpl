@@ -29,6 +29,10 @@ Insight Explorer
 
 ${elb_host}:${insight_port}/insight
 
+Platform Explorer
+=================
+${elb_host}:${platform_explorer_port}
+
 Kibana
 ======
 

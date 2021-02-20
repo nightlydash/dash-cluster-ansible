@@ -16,6 +16,9 @@ platform_dashpay_contract_block_height: ""
 
 platform_initial_core_chain_locked_height: ""
 
+platform_explorer_image: strophy/tenderdash-explorer:latest
+platform_explorer_port: 8080
+
 # Install OpenVPN
 openvpn_enabled: true
 

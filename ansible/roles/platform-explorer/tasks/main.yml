@@ -1,0 +1,10 @@
+---
+
+- name: create platform explorer container
+  docker_container:
+    name: platform_explorer
+    state: started
+    restart_policy: always
+    image: '{{ platform_explorer_image }}'
+    pull: true
+    network_mode: host
