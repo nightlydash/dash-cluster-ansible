@@ -51,6 +51,16 @@
     body_format: json
     body: "{{ lookup('file', 'files/index-templates/logs-drive.abci.json') }}"
 
+- name: Set up tenderdash index template
+  uri:
+    url: "http://localhost:9200/_index_template/logs-drive.tenderdash"
+    method: PUT
+    status_code: 200
+    user: "{{ elastic_username }}"
+    password: "{{ elastic_password }}"
+    body_format: json
+    body: "{{ lookup('file', 'files/index-templates/logs-drive.tenderdash.json') }}"
+
 - name: Set up Kibana UI
   uri:
     url: "http://localhost:5601/api/saved_objects/_bulk_create"

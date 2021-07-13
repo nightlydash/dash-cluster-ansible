@@ -1,5 +1,9 @@
 ---
 
+- name: get tenderdash container id
+  command: docker ps -aqf "name=mn_evo_services_tendermint"
+  register: tenderdash_container_id
+
 - name: set up filebeat log monitoring
   include_role:
     name: elastic.beats
@@ -89,6 +93,28 @@
                     - json.hostname
                     - json.time
                   ignore_missing: true
+          - type: container
+            enabled: true
+            json.message_key: _msg
+            json.keys_under_root: false
+            index: "logs-drive.tenderdash-{{ dash_network_name }}-%{[agent.version]}"
+            paths:
+              - '/var/lib/docker/containers/{{ tenderdash_container_id.stdout }}*/*.log'
+            processors:
+              - add_fields:
+                  target: event
+                  fields:
+                    dataset: "drive.tenderdash-{{ dash_network_name }}"
+              - rename:
+                  fields:
+                    - from: "json._msg"
+                      to: "message"
+                  ignore_missing: true
+                  fail_on_error: true
+              - rename:
+                  fields:
+                    - from: "json.level"
+                    - to: "log.level"
     output_conf:
       elasticsearch:
         hosts:
