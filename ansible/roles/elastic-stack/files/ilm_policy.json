@@ -7,6 +7,9 @@
           "rollover": {
             "max_size": "50gb",
             "max_age": "7d"
+          },
+          "set_priority": {
+            "priority": 100
           }
         }
       },
@@ -15,6 +18,9 @@
           "forcemerge": {
             "max_num_segments": 1,
             "index_codec": "best_compression"
+          },
+          "set_priority": {
+            "priority": 50
           },
           "migrate": {
             "enabled": false
@@ -25,9 +31,18 @@
         "min_age": "14d",
         "actions": {
           "freeze": {},
+          "set_priority": {
+            "priority": 0
+          },
           "migrate": {
             "enabled": false
           }
+        }
+      },
+      "delete": {
+        "min_age": "30d",
+        "actions": {
+          "delete": {}
         }
       }
     }
